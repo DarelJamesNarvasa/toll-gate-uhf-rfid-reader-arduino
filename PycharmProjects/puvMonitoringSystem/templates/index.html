@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Iot PUV</title>
+
+    <style>
+        body {
+            padding: 20px; /* Optional: Add some padding to make it look better */
+            background-color: lightblue;
+        }
+        .container{
+            background-color: white;
+            border: 10px solid white;
+            border-radius: 10px;
+            margin-bottom: 3%;
+            margin-top: 1%;
+            padding: 20px;
+        }
+
+        .toggle_button{
+            background-color: #001d3d;
+            color: white;
+            border: none; padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block; font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 3px;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: #003f5c; font-size: 42px; font-weight: bold; text-align: center;">IOT Public Utility Vehicle Monitoring System</h1>
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 1%">
+        <button onclick="toggleReload()" class="toggle_button">Stop Live</button>
+        <button onclick="deleteData()" class="toggle_button">New Data</button>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6" style="background-color: white;">
+                <div style="background-color: white; border-radius: 10px; border: 6px solid #40ABDF;">
+                    <!-- Embed the Folium map HTML -->
+                    {{ map1_html | safe }}
+                </div>
+            </div>
+            <div class="col-sm-6" style="background-color: white;">
+                <h4 style="color: #003f5c; font-size: 24px; font-weight: bold; text-align: center;">1st Racal Passenger: </h4>
+                <div style="background-color: white; height: 220px; overflow-y: scroll">
+                    <table class="table">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>Serial #</th>
+                                <th>Time</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for passenger in passengerOne_results|reverse %}
+                                {% if loop.index is odd %}
+                                    <tr>
+                                        <td>{{ passenger.rfid}}</td>
+                                        <td>{{ passenger.time }}</td>
+                                        <td>{{ passenger.date }}</td>
+                                        <td>{{ passenger.type }}</td>
+                                        <td>{{ passenger.latitude }}</td>
+                                        <td>{{ passenger.longitude }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6" style="background-color: white;">
+                <h4 style="color: #003f5c; font-size: 24px; font-weight: bold; text-align: center;">2nd Racal Passenger: </h4>
+                <div style="background-color: white; height: 220px; overflow-y: scroll">
+                    <table class="table">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>Serial #</th>
+                                <th>Time</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for passenger in passengerTwo_results|reverse %}
+                                {% if loop.index is odd %}
+                                    <tr>
+                                        <td>{{ passenger.rfid }}</td>
+                                        <td>{{ passenger.time }}</td>
+                                        <td>{{ passenger.date }}</td>
+                                        <td>{{ passenger.type }}</td>
+                                        <td>{{ passenger.latitude }}</td>
+                                        <td>{{ passenger.longitude }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-6" style="background-color: white;">
+                <div style="background-color: white; border-radius: 10px; border: 6px solid #1f7a8c;">
+                    <!-- Embed the Folium map HTML -->
+                    {{ map2_html | safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6" style="background-color: white;">
+                <div style="background-color: white; border-radius: 10px; border: 6px solid #62b6cb;">
+                    <!-- Embed the Folium map HTML -->
+                    {{ map3_html | safe }}
+                </div>
+            </div>
+            <div class="col-sm-6" style="background-color: white;">
+                <h4 style="color: #003f5c; font-size: 24px; font-weight: bold; text-align: center;">3rd Racal Passenger: </h4>
+                <div style="background-color: white; height: 220px; overflow-y: scroll">
+                    <table class="table">
+                        <thead class="sticky-header">
+                            <tr>
+                                <th>Serial #</th>
+                                <th>Time</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for passenger in passengerThree_results|reverse %}
+                                {% if loop.index is odd %}
+                                    <tr>
+                                        <td>{{ passenger.rfid}}</td>
+                                        <td>{{ passenger.time}}</td>
+                                        <td>{{ passenger.date}}</td>
+                                        <td>{{ passenger.type}}</td>
+                                        <td>{{ passenger.latitude}}</td>
+                                        <td>{{ passenger.longitude}}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+            var autoReloadInterval;
+
+            window.onload = function() {
+                // Set an interval for automatic reload every 3000 milliseconds (3 seconds)
+                autoReloadInterval = setInterval(function() {
+                    location.reload(true);
+                }, 500);
+            };
+
+            function toggleReload() {
+                var button = document.querySelector('button');
+
+                if (autoReloadInterval) {
+                    // Stop the automatic reload
+                    clearInterval(autoReloadInterval);
+                    autoReloadInterval = null;
+
+                    // Change button text to "Reload"
+                    button.textContent = 'Live';
+                } else {
+                    // Start the automatic reload
+                    autoReloadInterval = setInterval(function() {
+                        location.reload(true);
+                    }, 500);
+
+                    // Change button text to "Stop"
+                    button.textContent = 'Stop Live';
+                }
+            }
+
+            function manualReload() {
+                // Stop the automatic reload
+                clearInterval(autoReloadInterval);
+                autoReloadInterval = null;
+
+                // Manual reload when the button is clicked
+                location.reload(true);
+            }
+
+            function deleteData() {
+                // Send an AJAX request to the Flask route for data deletion
+                $.ajax({
+                    type: 'POST',
+                    url: '/delete_data',
+                    success: function(response) {
+                        // Display a confirmation message
+                        alert(response);
+                        // Reload the page to reflect the changes
+                        location.reload(true);
+                    },
+                    error: function(error) {
+                        // Handle errors if any
+                        console.error('Error deleting data:', error);
+                    }
+                });
+            }
+        </script>
+</body>
+</html>
