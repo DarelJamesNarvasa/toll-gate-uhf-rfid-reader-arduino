@@ -50,7 +50,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6" style="background-color: white;">
-                <div style="background-color: white; border-radius: 10px; border: 6px solid #40ABDF;">
+                <div style="background-color: white; border-radius: 10px; border: 6px solid #003f5c;">
                     <!-- Embed the Folium map HTML -->
                     {{ map1_html | safe }}
                 </div>
@@ -178,7 +178,7 @@
                 // Set an interval for automatic reload every 3000 milliseconds (3 seconds)
                 autoReloadInterval = setInterval(function() {
                     location.reload(true);
-                }, 500);
+                }, 1000);
             };
 
             function toggleReload() {
@@ -195,7 +195,7 @@
                     // Start the automatic reload
                     autoReloadInterval = setInterval(function() {
                         location.reload(true);
-                    }, 500);
+                    }, 1000);
 
                     // Change button text to "Stop"
                     button.textContent = 'Stop Live';

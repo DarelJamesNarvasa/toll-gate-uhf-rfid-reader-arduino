@@ -10,6 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 import os
+import psycopg2
 
 Base = declarative_base()
 
@@ -49,19 +50,8 @@ class Database(Base):
         return (f"({self.latitude}, {self.longitude}, {self.rakalId},{self.date}, "
                 f"{self.time}, {self.type}, {self.rfid})")
 
-#database_engine = create_engine("sqlite:///database.db", echo=True)
-#database_engine = create_engine("", echo=True)
-
-database_url = os.environ('postgres://oyzmoambukhoty:a82322b8b756193b6138b5f59b5abc642ac21c122dcb23748bd43bf7aa778fb9@ec2-44-213-151-75.compute-1.amazonaws.com:5432/db4nti2k55k3j5')
-
-if database_url.startswith('postgres://'):
-    database_url = database_url.replace('postgres://', 'postgresql://')
-
-database_engine = create_engine(database_url, echo=True, pool_pre_ping=True)
-
-
+database_engine = create_engine("sqlite:///database.db", echo=True)
 Base.metadata.create_all(bind=database_engine)
-
 Database_Session = sessionmaker(bind=database_engine)
 database_session = Database_Session()
 
